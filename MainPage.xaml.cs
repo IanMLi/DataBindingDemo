@@ -1,8 +1,9 @@
-﻿namespace DataBindingDemo;
+﻿using DataBindingDemo.Models;
+
+namespace DataBindingDemo;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
 
     public MainPage()
     {
@@ -11,13 +12,18 @@ public partial class MainPage : ContentPage
 
     private void OnCounterClicked(object sender, EventArgs e)
     {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+/* Se crea la instancia de persona */
+        var persona = new Person
+        {
+            Name = "John Doe",
+            Phone = "0125636985",
+            Address = "123 Main Street"
+        };
+        /* Crear el Binding o enlace usando la clase Bindings */
+        Binding personBinding = new Binding();
+        /* Origen de la informacion  */
+        personBinding.Source = persona;
+        personBinding.Path = "Name";
+        txtName.SetBinding(Label.TextProperty, personBinding);
     }
 }
